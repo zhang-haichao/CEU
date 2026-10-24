@@ -1,4 +1,6 @@
-# Explain-then-Forget: Causal Explanation-based Unlearning for Efficient and Precise Recommendation
+# Explain, Then Forget: Recommendation Unlearning under Asymmetric Access Constraint
+
+**IEEE ICDM 2026** · [Project Page](https://zhanghaichao.loc.cc/CEU/) · [Paper](https://zhanghaichao.loc.cc/CEU/static/files/ceu-icdm-2026.pdf) · [Presentation](https://zhanghaichao.loc.cc/CEU/#presentation)
 
 ## Project Introduction
 

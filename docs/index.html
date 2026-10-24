@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Explain, Then Forget | CEU at ICDM 2026</title>
+    <meta
+      name="description"
+      content="CEU enables recommendation unlearning in API-only MLaaS systems through causal explanation and localized ranking adjustment, without modifying model parameters.">
+    <meta
+      name="keywords"
+      content="Recommendation Unlearning, Causal Inference, Counterfactual Explanation, Graph Neural Networks, ICDM 2026, CEU">
+    <meta name="author" content="Haichao Zhang, Chong Zhang, Wen Wang, Shi Qiu, Peiyu Hu, Jia Wang">
+    <meta name="theme-color" content="#102a56">
+    <link rel="canonical" href="https://zhanghaichao.loc.cc/CEU/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/site.css">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CEU · ICDM 2026">
+    <meta property="og:title" content="Explain, Then Forget">
+    <meta
+      property="og:description"
+      content="Causal explanation-based recommendation unlearning under asymmetric access constraints.">
+    <meta property="og:url" content="https://zhanghaichao.loc.cc/CEU/">
+    <meta property="og:image" content="https://zhanghaichao.loc.cc/CEU/static/images/og-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Explain, Then Forget — CEU at ICDM 2026">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://zhanghaichao.loc.cc/CEU/static/images/og-card.png">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Explain, Then Forget: Recommendation Unlearning under Asymmetric Access Constraint",
+        "name": "Explain, Then Forget: Recommendation Unlearning under Asymmetric Access Constraint",
+        "url": "https://zhanghaichao.loc.cc/CEU/",
+        "datePublished": "2026",
+        "isPartOf": {
+          "@type": "PublicationEvent",
+          "name": "2026 IEEE International Conference on Data Mining (ICDM)"
+        },
+        "author": [
+          { "@type": "Person", "name": "Haichao Zhang", "url": "https://zhanghaichao.loc.cc/" },
+          { "@type": "Person", "name": "Chong Zhang" },
+          { "@type": "Person", "name": "Wen Wang" },
+          { "@type": "Person", "name": "Shi Qiu" },
+          { "@type": "Person", "name": "Peiyu Hu" },
+          { "@type": "Person", "name": "Jia Wang" }
+        ],
+        "keywords": [
+          "Recommendation Unlearning",
+          "Causal Inference",
+          "Counterfactual Explanation",
+          "Graph Neural Networks"
+        ],
+        "sameAs": [
+          "https://github.com/zhang-haichao/CEU",
+          "https://zhanghaichao.loc.cc/CEU/"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="nav-shell">
+        <a class="brand" href="#top" aria-label="CEU home">
+          <span class="brand-mark">CEU</span>
+          <span class="brand-copy">
+            <strong>Explain, Then Forget</strong>
+            <small>ICDM 2026</small>
+          </span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+          <span></span><span></span><span></span>
+          <span class="sr-only">Open navigation</span>
+        </button>
+
+        <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation">
+          <a href="#overview" data-nav-link>
+            <span data-lang-label="en">Overview</span><span data-lang-label="zh" hidden>概览</span>
+          </a>
+          <a href="#contributions" data-nav-link>
+            <span data-lang-label="en">Contributions</span><span data-lang-label="zh" hidden>贡献</span>
+          </a>
+          <a href="#method" data-nav-link>
+            <span data-lang-label="en">Method</span><span data-lang-label="zh" hidden>方法</span>
+          </a>
+          <a href="#results" data-nav-link>
+            <span data-lang-label="en">Results</span><span data-lang-label="zh" hidden>实验</span>
+          </a>
+          <a href="#presentation" data-nav-link>
+            <span data-lang-label="en">Video</span><span data-lang-label="zh" hidden>视频</span>
+          </a>
+          <a href="#citation" data-nav-link>
+            <span data-lang-label="en">Citation</span><span data-lang-label="zh" hidden>引用</span>
+          </a>
+          <div class="language-switch" role="group" aria-label="Language">
+            <button type="button" data-language="en" aria-pressed="true">EN</button>
+            <button type="button" data-language="zh" aria-pressed="false">中文</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" id="top">
+        <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
+        <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+        <div class="page-shell hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">IEEE ICDM 2026 · Recommendation Unlearning</p>
+            <h1>Explain, Then Forget:<br>Recommendation Unlearning under Asymmetric Access Constraint</h1>
+
+            <div class="authors" role="group" aria-label="Paper authors">
+              <a href="https://zhanghaichao.loc.cc/" target="_blank" rel="noopener">Haichao Zhang<sup>1,2</sup></a>
+              <span>Chong Zhang<sup>1,2</sup></span>
+              <span>Wen Wang<sup>1</sup></span>
+              <span>Shi Qiu<sup>1</sup></span>
+              <span>Peiyu Hu<sup>1,2</sup></span>
+              <span>Jia Wang<sup>1,2,†</sup></span>
+            </div>
+
+            <div class="affiliations">
+              <p><sup>1</sup> Xi'an Jiaotong-Liverpool University, China</p>
+              <p><sup>2</sup> University of Liverpool, United Kingdom</p>
+              <p class="corresponding"><sup>†</sup> Corresponding author</p>
+            </div>
+
+            <div class="hero-actions" role="group" aria-label="Paper resources">
+              <a class="button button-primary" href="./static/files/ceu-icdm-2026.pdf" target="_blank" rel="noopener">
+                <span data-lang-label="en">Paper</span><span data-lang-label="zh" hidden>论文</span>
+              </a>
+              <a class="button" href="#presentation">
+                <span data-lang-label="en">Presentation</span><span data-lang-label="zh" hidden>报告视频</span>
+              </a>
+              <a class="button" href="https://github.com/zhang-haichao/CEU" target="_blank" rel="noopener">
+                <span data-lang-label="en">Code</span><span data-lang-label="zh" hidden>代码</span>
+              </a>
+              <a class="button" href="./static/files/ceu-icdm-2026-slides.pptx" download>
+                <span data-lang-label="en">Slides</span><span data-lang-label="zh" hidden>幻灯片</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-visual" role="img" aria-label="CEU explain then forget workflow">
+            <div class="workflow-kicker">
+              <span data-lang-label="en">A parameter-free path to unlearning</span>
+              <span data-lang-label="zh" hidden>无需修改参数的遗忘路径</span>
+            </div>
+            <div class="workflow-stage stage-explain">
+              <div class="stage-number">01</div>
+              <div>
+                <span class="stage-tag">CCI</span>
+                <h2><span data-lang-label="en">Explain</span><span data-lang-label="zh" hidden>解释</span></h2>
+                <p data-lang-content="en">Identify the minimal causal support and quantify how each interaction shapes a recommendation.</p>
+                <p data-lang-content="zh" hidden>识别最小因果支持集，量化每条历史交互对当前推荐的影响。</p>
+              </div>
+            </div>
+            <div class="workflow-connector" aria-hidden="true"><span></span></div>
+            <div class="workflow-stage stage-forget">
+              <div class="stage-number">02</div>
+              <div>
+                <span class="stage-tag">URA</span>
+                <h2><span data-lang-label="en">Forget</span><span data-lang-label="zh" hidden>遗忘</span></h2>
+                <p data-lang-content="en">Apply a localized score adjustment and rebuild the ranking while the pretrained model stays fixed.</p>
+                <p data-lang-content="zh" hidden>仅调整受影响项目的得分并重排推荐，预训练模型保持不变。</p>
+              </div>
+            </div>
+            <div class="workflow-outcome">
+              <span>API-only MLaaS</span>
+              <span>No parameter updates</span>
+              <span>Continuous requests</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-intro" id="overview">
+        <div class="page-shell">
+          <div class="section-heading centered">
+            <p class="eyebrow"><span data-lang-label="en">At a glance</span><span data-lang-label="zh" hidden>研究概览</span></p>
+            <div data-lang-content="en">
+              <h2>Recommendation unlearning without model access</h2>
+              <p class="lead">CEU turns causal explanation into an output-level intervention for recommender systems exposed only through APIs.</p>
+            </div>
+            <div data-lang-content="zh" hidden>
+              <h2>无需访问模型内部的推荐遗忘</h2>
+              <p class="lead">CEU 将因果解释转化为输出层干预，适用于只能通过 API 访问的推荐系统。</p>
+            </div>
+          </div>
+
+          <div class="metric-strip" role="group" aria-label="Key figures">
+            <article>
+              <strong>0</strong>
+              <span data-lang-content="en">model parameters updated</span>
+              <span data-lang-content="zh" hidden>个模型参数需要更新</span>
+            </article>
+            <article>
+              <strong>0.34–6.37 s</strong>
+              <span data-lang-content="en">online unlearning latency</span>
+              <span data-lang-content="zh" hidden>在线遗忘延迟</span>
+            </article>
+            <article>
+              <strong>9.31–52.74×</strong>
+              <span data-lang-content="en">faster than the next-best method</span>
+              <span data-lang-content="zh" hidden>相对次优方法的加速</span>
+            </article>
+            <article>
+              <strong>≈22 KiB</strong>
+              <span data-lang-content="en">causal attribution cache per user</span>
+              <span data-lang-content="zh" hidden>每位用户的因果归因缓存</span>
+            </article>
+          </div>
+
+          <div class="motivation-grid">
+            <div class="motivation-copy">
+              <p class="section-index">01 · Motivation</p>
+              <div data-lang-content="en">
+                <h3>Asymmetric access changes the unlearning problem</h3>
+                <p>In Machine-Learning-as-a-Service, a model provider trains and hosts the recommender while a service operator serves users through APIs. The operator receives forgetting requests but cannot retrain, fine-tune, or inspect model parameters.</p>
+                <p>CEU works within this boundary. The provider supplies causal explanations, and the operator uses them to adjust only the affected ranking scores.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>非对称访问改变了推荐遗忘问题</h3>
+                <p>在机器学习即服务架构中，模型提供方负责训练和托管推荐模型，服务运营方只能通过 API 为用户提供推荐。运营方接收遗忘请求，却无法重训练、微调或访问模型参数。</p>
+                <p>CEU 在这一边界内工作：模型提供方输出因果解释，服务运营方据此只调整受影响项目的排序得分。</p>
+              </div>
+            </div>
+            <figure class="figure-card motivation-figure">
+              <a href="./static/images/motivation.webp" target="_blank" rel="noopener">
+                <img
+                  src="./static/images/motivation.webp"
+                  width="1304"
+                  height="999"
+                  loading="lazy"
+                  alt="Recommendation unlearning in an API-only MLaaS environment">
+              </a>
+              <figcaption>
+                <span data-lang-content="en">CEU identifies causal links and adjusts rankings without changing provider-side parameters.</span>
+                <span data-lang-content="zh" hidden>CEU 识别因果关联并调整排序，无需修改模型提供方的参数。</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-soft" id="abstract">
+        <div class="page-shell narrow-shell">
+          <div class="section-heading">
+            <p class="section-index">02 · Abstract</p>
+            <h2><span data-lang-label="en">Abstract</span><span data-lang-label="zh" hidden>摘要</span></h2>
+          </div>
+          <div class="abstract-copy" data-lang-content="en">
+            <p>Recommendation unlearning aims to remove the influence of specific historical interactions that should no longer affect future recommendations, such as noisy clicks or outdated user preferences. The task becomes substantially harder in Machine-Learning-as-a-Service architectures, where a service operator accesses a remotely hosted recommender only through APIs and cannot modify its internal parameters.</p>
+            <p>We propose <strong>Causal Explanation-based Unlearning (CEU)</strong>, an output-level framework for this asymmetric access setting. CEU first estimates how a forgotten interaction causally contributes to the current recommendation. Guided by this signal, it then removes the interaction's influence by adjusting the final ranking scores of affected items. Because CEU leaves model parameters untouched, it supports continuous unlearning requests without accumulating errors from repeated parameter updates. Experiments on three public datasets show effectiveness comparable to full retraining while preserving recommendation utility and substantially reducing computation.</p>
+          </div>
+          <div class="abstract-copy" data-lang-content="zh" hidden>
+            <p>推荐遗忘旨在移除不应继续影响未来推荐的历史交互，例如误点击或已经过时的用户偏好。在机器学习即服务架构中，这一任务更加困难：服务运营方只能通过 API 访问远程托管的推荐模型，无法修改模型内部参数。</p>
+            <p>我们提出<strong>基于因果解释的遗忘框架 CEU</strong>，面向这种非对称访问场景。CEU 首先估计待遗忘交互对当前推荐的因果贡献，再利用该信号调整受影响项目的最终排序得分，从而移除相应影响。由于 CEU 不改变模型参数，它能够持续处理遗忘请求，并避免重复参数更新带来的误差累积。三个公开数据集上的实验表明，CEU 的遗忘效果可与完全重训练相比，同时保持推荐效用并显著降低计算成本。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contributions">
+        <div class="page-shell">
+          <div class="section-heading centered">
+            <p class="section-index">03 · Contributions</p>
+            <div data-lang-content="en">
+              <h2>What CEU adds</h2>
+              <p class="lead">A practical unlearning design for the constraints that service operators actually face.</p>
+            </div>
+            <div data-lang-content="zh" hidden>
+              <h2>CEU 的主要贡献</h2>
+              <p class="lead">针对服务运营方真实访问约束设计的实用推荐遗忘方案。</p>
+            </div>
+          </div>
+
+          <div class="contribution-grid">
+            <article class="contribution-card">
+              <span class="card-number">01</span>
+              <div data-lang-content="en">
+                <h3>Unlearning for API-only systems</h3>
+                <p>A parameter-free framework tailored to MLaaS, where the service operator cannot access model weights or gradients.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>面向 API 场景的推荐遗忘</h3>
+                <p>为服务运营方无法访问模型权重和梯度的 MLaaS 场景设计，无需更新参数。</p>
+              </div>
+            </article>
+            <article class="contribution-card">
+              <span class="card-number">02</span>
+              <div data-lang-content="en">
+                <h3>Causal Contribution Identifier</h3>
+                <p>CCI finds the minimal causal support behind a recommendation and assigns a contribution weight to each supporting interaction.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>因果贡献识别器</h3>
+                <p>CCI 寻找支撑推荐结果的最小因果集合，并为每条关键交互分配贡献权重。</p>
+              </div>
+            </article>
+            <article class="contribution-card">
+              <span class="card-number">03</span>
+              <div data-lang-content="en">
+                <h3>Localized ranking intervention</h3>
+                <p>URA uses the causal signal to adjust only affected candidates, then reconstructs the ranking without disturbing unrelated preferences.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>局部排序干预</h3>
+                <p>URA 根据因果信号只调整受影响候选项目，并重新构建排序，尽量不扰动无关偏好。</p>
+              </div>
+            </article>
+            <article class="contribution-card">
+              <span class="card-number">04</span>
+              <div data-lang-content="en">
+                <h3>Utility, forgetting, and speed</h3>
+                <p>Results across three datasets and two recommenders show strong utility retention, effective forgetting, and low online latency.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>效用、遗忘效果与效率</h3>
+                <p>三个数据集与两类推荐模型的结果表明，CEU 同时保持推荐效用、实现有效遗忘并降低在线延迟。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-navy" id="method">
+        <div class="page-shell">
+          <div class="section-heading light centered">
+            <p class="section-index">04 · Method</p>
+            <div data-lang-content="en">
+              <h2>Explain the cause, then remove its effect</h2>
+              <p class="lead">CEU separates causal attribution at the provider from ranking intervention at the operator.</p>
+            </div>
+            <div data-lang-content="zh" hidden>
+              <h2>先解释原因，再移除影响</h2>
+              <p class="lead">CEU 将模型提供方的因果归因与服务运营方的排序干预解耦。</p>
+            </div>
+          </div>
+
+          <figure class="framework-figure">
+            <a href="./static/images/framework.webp" target="_blank" rel="noopener">
+              <img
+                src="./static/images/framework.webp"
+                width="1908"
+                height="1437"
+                loading="lazy"
+                alt="The complete CEU framework with pre-training, causal contribution identification, and rank adjustment">
+            </a>
+            <figcaption>
+              <span data-lang-content="en">The provider computes causal support and contribution weights; the operator applies a targeted score adjustment while the pretrained model remains fixed.</span>
+              <span data-lang-content="zh" hidden>模型提供方计算因果支持集与贡献权重，服务运营方执行目标化得分调整，预训练模型始终保持不变。</span>
+            </figcaption>
+          </figure>
+
+          <div class="method-steps">
+            <article>
+              <div class="method-label"><span>CCI</span><small>Explain stage</small></div>
+              <div data-lang-content="en">
+                <h3>Causal Contribution Identifier</h3>
+                <p>CCI learns a sparse continuous mask over the user's history. Interactions whose suppression flips the recommendation form the causal support set. Their mask values determine how strongly each interaction sustains the recommendation.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>因果贡献识别器</h3>
+                <p>CCI 在用户历史上学习稀疏连续掩码。能够在被抑制后改变推荐结果的交互构成因果支持集，掩码值则刻画各交互对推荐结果的支撑强度。</p>
+              </div>
+            </article>
+            <article>
+              <div class="method-label"><span>URA</span><small>Forget stage</small></div>
+              <div data-lang-content="en">
+                <h3>Unlearning-driven Rank Adjuster</h3>
+                <p>When a user revokes an interaction, URA checks which candidate recommendations depend on it. Only those scores receive a causal-weighted penalty before the operator produces a new ranking.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>遗忘驱动的排序调整器</h3>
+                <p>当用户撤回一条交互时，URA 判断哪些候选推荐依赖该交互，只对这些项目施加由因果贡献控制的惩罚，再生成新的排序列表。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="results">
+        <div class="page-shell">
+          <div class="section-heading centered">
+            <p class="section-index">05 · Experiments</p>
+            <div data-lang-content="en">
+              <h2>Precise forgetting without the cost of retraining</h2>
+              <p class="lead">Three public datasets, two backbone recommenders, and representative retraining, fine-tuning, and influence-based baselines.</p>
+            </div>
+            <div data-lang-content="zh" hidden>
+              <h2>无需重训练成本的精准遗忘</h2>
+              <p class="lead">在三个公开数据集、两类推荐模型以及重训练、微调和影响函数等代表性基线上进行验证。</p>
+            </div>
+          </div>
+
+          <div class="result-summary">
+            <article>
+              <span class="result-label">Utility · ML-1M / LightGCN</span>
+              <strong>0.7584</strong>
+              <p data-lang-content="en">CEU HR@10, compared with 0.7680 for the original model.</p>
+              <p data-lang-content="zh" hidden>CEU 的 HR@10；原始模型为 0.7680。</p>
+            </article>
+            <article>
+              <span class="result-label">Forgetting · Netflix / LightGCN</span>
+              <strong>0.5000</strong>
+              <p data-lang-content="en">MIA accuracy at 10% forgetting, matching random guessing.</p>
+              <p data-lang-content="zh" hidden>遗忘 10% 数据时的 MIA 准确率，达到随机猜测水平。</p>
+            </article>
+            <article>
+              <span class="result-label">Efficiency · All settings</span>
+              <strong>≤6.37 s</strong>
+              <p data-lang-content="en">Maximum online latency across all reported dataset/backbone pairs.</p>
+              <p data-lang-content="zh" hidden>所有数据集与推荐模型组合中的最大在线延迟。</p>
+            </article>
+          </div>
+
+          <article class="result-feature">
+            <div class="result-copy">
+              <span class="result-number">RQ1 + RQ4</span>
+              <div data-lang-content="en">
+                <h3>Causal guidance preserves recommendation utility</h3>
+                <p>CEU-Full stays close to the original model across both LightGCN and BPR. Random or reversed attributions reduce utility sharply, showing that accurate causal support is essential rather than decorative.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>因果引导保持推荐效用</h3>
+                <p>在 LightGCN 和 BPR 上，CEU-Full 的表现均接近原始模型；随机或反向归因会明显破坏效用，说明准确的因果支持是方法有效性的关键。</p>
+              </div>
+            </div>
+            <figure class="result-figure wide-figure">
+              <a href="./static/images/utility.webp" target="_blank" rel="noopener">
+                <img src="./static/images/utility.webp" width="2600" height="644" loading="lazy" alt="Utility comparison among CEU variants">
+              </a>
+            </figure>
+          </article>
+
+          <article class="result-feature reverse">
+            <div class="result-copy">
+              <span class="result-number">RQ2</span>
+              <div data-lang-content="en">
+                <h3>CEU reaches the useful forgetting region</h3>
+                <p>The desired operating point combines high ranking utility with low membership-inference accuracy. CEU-Full occupies this region, while non-causal variants achieve low attack accuracy only by damaging recommendation quality.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>CEU 进入有效遗忘区域</h3>
+                <p>理想工作点同时要求较高的排序效用与较低的成员推断准确率。CEU-Full 位于该区域，而非因果变体只能通过破坏推荐质量来降低攻击准确率。</p>
+              </div>
+            </div>
+            <figure class="result-figure">
+              <a href="./static/images/tradeoff.webp" target="_blank" rel="noopener">
+                <img src="./static/images/tradeoff.webp" width="2400" height="979" loading="lazy" alt="Tradeoff between recommendation utility and membership inference accuracy">
+              </a>
+            </figure>
+          </article>
+
+          <article class="result-feature">
+            <div class="result-copy">
+              <span class="result-number">Stress test</span>
+              <div data-lang-content="en">
+                <h3>Retained-set performance stays stable</h3>
+                <p>As the forgetting ratio increases from 2% to 10%, CEU remains close to the no-update reference. Parameter-updating baselines show larger drops in HR@10 and Recall@10 retention.</p>
+              </div>
+              <div data-lang-content="zh" hidden>
+                <h3>保留集性能保持稳定</h3>
+                <p>当遗忘比例从 2% 增加到 10% 时，CEU 始终接近不更新模型的参考结果；需要修改参数的基线在 HR@10 和 Recall@10 保留率上下降更明显。</p>
+              </div>
+            </div>
+            <figure class="result-figure">
+              <a href="./static/images/stability.webp" target="_blank" rel="noopener">
+                <img src="./static/images/stability.webp" width="2200" height="809" loading="lazy" alt="Retained-set stability under increasing forget ratios">
+              </a>
+            </figure>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-soft" id="presentation">
+        <div class="page-shell">
+          <div class="section-heading centered">
+            <p class="section-index">06 · Presentation</p>
+            <div data-lang-content="en">
+              <h2>Paper presentation</h2>
+              <p class="lead">A complete introduction to the motivation, CEU framework, and experimental findings.</p>
+            </div>
+            <div data-lang-content="zh" hidden>
+              <h2>论文报告视频</h2>
+              <p class="lead">完整介绍研究动机、CEU 框架与主要实验结果。</p>
+            </div>
+          </div>
+
+          <div class="video-frame">
+            <video
+              controls
+              playsinline
+              preload="metadata"
+              poster="./static/images/video-poster.webp"
+              aria-label="CEU paper presentation video"
+            >
+              <source src="./static/media/ceu-presentation.mp4" type="video/mp4">
+              Your browser does not support embedded video.
+            </video>
+          </div>
+          <div class="video-meta">
+            <span>13:45 · 1080p</span>
+            <a href="./static/media/ceu-presentation.mp4" download>
+              <span data-lang-label="en">Download video</span><span data-lang-label="zh" hidden>下载视频</span>
+            </a>
+            <a href="./static/files/ceu-icdm-2026-slides.pptx" download>
+              <span data-lang-label="en">Download slides</span><span data-lang-label="zh" hidden>下载幻灯片</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="citation">
+        <div class="page-shell citation-grid">
+          <div class="citation-intro">
+            <p class="section-index">07 · Citation</p>
+            <div data-lang-content="en">
+              <h2>Cite this work</h2>
+              <p>The entry below reflects the accepted ICDM 2026 paper. DOI and page numbers will be added when the proceedings become available.</p>
+            </div>
+            <div data-lang-content="zh" hidden>
+              <h2>引用本工作</h2>
+              <p>以下信息对应 ICDM 2026 录用论文。正式论文集发布后，将补充 DOI 与页码。</p>
+            </div>
+            <div class="citation-links">
+              <a href="./static/files/ceu-icdm-2026.pdf" target="_blank" rel="noopener">
+                <span data-lang-label="en">Read the paper</span><span data-lang-label="zh" hidden>阅读论文</span>
+              </a>
+              <a href="https://github.com/zhang-haichao/CEU" target="_blank" rel="noopener">
+                <span data-lang-label="en">Explore the code</span><span data-lang-label="zh" hidden>查看代码</span>
+              </a>
+            </div>
+          </div>
+          <div class="bibtex-panel">
+            <div class="bibtex-header">
+              <span>BibTeX</span>
+              <button
+                class="copy-button"
+                type="button"
+                data-copy-bibtex
+                data-en-label="Copy"
+                data-zh-label="复制"
+              >Copy</button>
+            </div>
+            <pre id="bibtex"><code>@inproceedings{zhang2026explain,
+  title     = {Explain, Then Forget: Recommendation Unlearning under Asymmetric Access Constraint},
+  author    = {Zhang, Haichao and Zhang, Chong and Wang, Wen and Qiu, Shi and Hu, Peiyu and Wang, Jia},
+  booktitle = {2026 IEEE International Conference on Data Mining (ICDM)},
+  year      = {2026},
+  url       = {https://zhanghaichao.loc.cc/CEU/}
+}</code></pre>
+            <p class="copy-status" data-copy-status aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section acknowledgements">
+        <div class="page-shell narrow-shell">
+          <div data-lang-content="en">
+            <h2>Acknowledgements</h2>
+            <p>This study was funded by the National Natural Science Foundation of China (Grant No. 72401232), the Natural Science Foundation of the Jiangsu Higher Educational Institution of China (Grant No. 23KJB520037), the XJTLU Research Development Fund (RDF-21-01-053), and Liaoning Liaohe Lab (Grant Nos. LLL24ZZ-02-01 and LLL24ZZ-02-02).</p>
+          </div>
+          <div data-lang-content="zh" hidden>
+            <h2>致谢</h2>
+            <p>本研究获得国家自然科学基金（72401232）、江苏省高等学校自然科学研究项目（23KJB520037）、西交利物浦大学研究发展基金（RDF-21-01-053）以及辽宁辽河实验室（LLL24ZZ-02-01、LLL24ZZ-02-02）的支持。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-shell footer-grid">
+        <div>
+          <strong>CEU · Explain, Then Forget</strong>
+          <p>IEEE ICDM 2026</p>
+        </div>
+        <p class="footer-note">
+          <span data-lang-content="en">Built for clear, accessible research communication.</span>
+          <span data-lang-content="zh" hidden>为清晰、易读的学术传播而设计。</span>
+          <br>
+          <span>Design lineage: </span>
+          <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page</a>
+          <span> · </span>
+          <a href="https://shikun.io/projects/clarity" target="_blank" rel="noopener">Clarity</a>
+        </p>
+      </div>
+    </footer>
+
+    <button class="back-to-top" type="button" data-back-to-top aria-label="Back to top">↑</button>
+    <script src="./static/js/site.js" defer></script>
+  </body>
+</html>
