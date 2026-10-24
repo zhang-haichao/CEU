@@ -69,14 +69,30 @@
     const citation = document.querySelector("#bibtex code")?.textContent?.trim();
     if (!citation) return;
 
+    let copied = false;
     try {
       await navigator.clipboard.writeText(citation);
+      copied = true;
+    } catch {
+      const fallback = document.createElement("textarea");
+      fallback.value = citation;
+      fallback.setAttribute("readonly", "");
+      fallback.setAttribute("aria-hidden", "true");
+      fallback.style.position = "fixed";
+      fallback.style.opacity = "0";
+      document.body.append(fallback);
+      fallback.select();
+      copied = document.execCommand("copy");
+      fallback.remove();
+    }
+
+    if (copied) {
       copyStatus.textContent = activeLanguage === "zh" ? "BibTeX 已复制。" : "BibTeX copied.";
       copyButton.textContent = activeLanguage === "zh" ? "已复制" : "Copied";
       window.setTimeout(() => {
         copyButton.textContent = activeLanguage === "zh" ? copyButton.dataset.zhLabel : copyButton.dataset.enLabel;
       }, 1600);
-    } catch {
+    } else {
       copyStatus.textContent = activeLanguage === "zh" ? "无法自动复制，请手动选择文本。" : "Copy failed. Please select the text manually.";
     }
   });
@@ -120,4 +136,3 @@
   }
   setLanguage(savedLanguage);
 })();
-
